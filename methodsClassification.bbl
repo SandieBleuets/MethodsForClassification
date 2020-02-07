@@ -1,0 +1,152 @@
+\begin{thebibliography}{10}
+
+\bibitem{balakrishnama1998linear}
+{\sc Balakrishnama, S., and Ganapathiraju, A.}
+\newblock Linear discriminant analysis-a brief tutorial.
+\newblock {\em Institute for Signal and information Processing 18\/} (1998),
+  1--8.
+
+\bibitem{bonaccorso2017machine}
+{\sc Bonaccorso, G.}
+\newblock {\em Machine learning algorithms}.
+\newblock Packt Publishing Ltd, 2017.
+
+\bibitem{breiman2001random}
+{\sc Breiman, L.}
+\newblock Random forests.
+\newblock {\em Machine learning 45}, 1 (2001), 5--32.
+
+\bibitem{coelho2015building}
+{\sc Coelho, L.~P., and Richert, W.}
+\newblock {\em Building machine learning systems with Python}.
+\newblock Packt Publishing Ltd, 2015.
+
+\bibitem{cortes1995support}
+{\sc Cortes, C., and Vapnik, V.}
+\newblock Support-vector networks.
+\newblock {\em Machine learning 20}, 3 (1995), 273--297.
+
+\bibitem{czepiel2002maximum}
+{\sc Czepiel, S.~A.}
+\newblock Maximum likelihood estimation of logistic regression models: theory
+  and implementation.
+\newblock {\em Available at czep. net/stat/mlelr. pdf\/} (2002).
+
+\bibitem{dangeti2017statistics}
+{\sc Dangeti, P.}
+\newblock {\em Statistics for machine learning}.
+\newblock Packt Publishing Ltd, 2017.
+
+\bibitem{dash1997feature}
+{\sc Dash, M., and Liu, H.}
+\newblock Feature selection for classification.
+\newblock {\em Intelligent data analysis 1}, 1-4 (1997), 131--156.
+
+\bibitem{duda2012pattern}
+{\sc Duda, R.~O., Hart, P.~E., and Stork, D.~G.}
+\newblock {\em Pattern classification}.
+\newblock John Wiley \& Sons, 2012.
+
+\bibitem{escofier2008analyses}
+{\sc Escofier, B., and Pag{\`e}s, J.}
+\newblock {\em Analyses factorielles simples et multiples. Objectifs
+  m{\'e}thodes et interpr{\'e}tation}.
+\newblock Dunod, 2008.
+
+\bibitem{mitData}
+{\sc Grimson, E., Guttag, J., and Bell, A.}
+\newblock Introduction to computational thinking and data science., 2016.
+
+\bibitem{gu2012generalized}
+{\sc Gu, Q., Li, Z., and Han, J.}
+\newblock Generalized fisher score for feature selection.
+\newblock {\em arXiv preprint arXiv:1202.3725\/} (2012).
+
+\bibitem{guyon2003introduction}
+{\sc Guyon, I., and Elisseeff, A.}
+\newblock An introduction to variable and feature selection.
+\newblock {\em Journal of machine learning research 3}, Mar (2003), 1157--1182.
+
+\bibitem{hall1999feature}
+{\sc Hall, M.~A., and Smith, L.~A.}
+\newblock Feature selection for machine learning: comparing a correlation-based
+  filter approach to the wrapper.
+\newblock In {\em FLAIRS conference\/} (1999), vol.~1999, pp.~235--239.
+
+\bibitem{jolliffe2011principal}
+{\sc Jolliffe, I.}
+\newblock {\em Principal component analysis}.
+\newblock Springer, 2011.
+
+\bibitem{joshi2017artificial}
+{\sc Joshi, P.}
+\newblock {\em Artificial intelligence with python}.
+\newblock Packt Publishing Ltd, 2017.
+
+\bibitem{kira1992feature}
+{\sc Kira, K., and Rendell, L.~A.}
+\newblock The feature selection problem: Traditional methods and a new
+  algorithm.
+\newblock In {\em Aaai\/} (1992), vol.~2, pp.~129--134.
+
+\bibitem{kohavi1997wrappers}
+{\sc Kohavi, R., and John, G.~H.}
+\newblock Wrappers for feature subset selection.
+\newblock {\em Artificial intelligence 97}, 1-2 (1997), 273--324.
+
+\bibitem{le2010multiple}
+{\sc Le~Roux, B., and Rouanet, H.}
+\newblock {\em Multiple correspondence analysis}, vol.~163.
+\newblock Sage, 2010.
+
+\bibitem{liu2007computational}
+{\sc Liu, H., and Motoda, H.}
+\newblock {\em Computational methods of feature selection}.
+\newblock CRC Press, 2007.
+
+\bibitem{neal2006high}
+{\sc Neal, R.~M., and Zhang, J.}
+\newblock High dimensional classification with bayesian neural networks and
+  dirichlet diffusion trees.
+\newblock In {\em Feature Extraction}. Springer, 2006, pp.~265--296.
+
+\bibitem{parizeau2004perceptron}
+{\sc Parizeau, M.}
+\newblock Le perceptron multicouche et son algorithme de r{\'e}tropropagation
+  des erreurs.
+\newblock {\em d{\'e}partement de g{\'e}nie {\'e}lectrique et de g{\'e}nie
+  informatique, Universit{\'e} de laval\/} (2004).
+
+\bibitem{rao1948tests}
+{\sc Rao, C.~R.}
+\newblock Tests of significance in multivariate analysis.
+\newblock {\em Biometrika 35}, 1/2 (1948), 58--79.
+
+\bibitem{roobaert2006information}
+{\sc Roobaert, D., Karakoulas, G., and Chawla, N.~V.}
+\newblock Information gain, correlation and support vector machines.
+\newblock In {\em Feature extraction}. Springer, 2006, pp.~463--470.
+
+\bibitem{rosenblatt1958perceptron}
+{\sc Rosenblatt, F.}
+\newblock The perceptron: a probabilistic model for information storage and
+  organization in the brain.
+\newblock {\em Psychological review 65}, 6 (1958), 386.
+
+\bibitem{scholkopf1997kernel}
+{\sc Sch{\"o}lkopf, B., Smola, A., and M{\"u}ller, K.-R.}
+\newblock Kernel principal component analysis.
+\newblock In {\em International conference on artificial neural networks\/}
+  (1997), Springer, pp.~583--588.
+
+\bibitem{shiffman2012nature}
+{\sc Shiffman, D.}
+\newblock The nature of code: Chapter 10.
+\newblock {\em Neural Networks\/} (2012).
+
+\bibitem{tang2014feature}
+{\sc Tang, J., Alelyani, S., and Liu, H.}
+\newblock Feature selection for classification: A review.
+\newblock {\em Data classification: algorithms and applications\/} (2014), 37.
+
+\end{thebibliography}

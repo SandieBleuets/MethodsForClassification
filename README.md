@@ -1,4 +1,4 @@
 # MethodsForClassification
 Introduction to the methods for classification - latex
 
-This contains alls file to generate my article dealing with the key concept of machine learning techniques for classification
+This contains all files to generate the article dealing with the key concepts of machine learning for classification

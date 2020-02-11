@@ -1,0 +1,28 @@
+name: Deploy to GitHub Pages
+
+on: [push]
+
+jobs:
+  deploy-gh-pages:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Copy static files
+      run: |
+        mkdir -p public/figures
+        cp figures/* public/figures/
+        cp site.css public/
+    - name: Pandoc
+      uses: docker://pandoc/latex:2.9
+      with:
+        args: "--defaults=pandoc-html.yaml --standalone"
+    - name: Deploy
+      uses: crazy-max/ghaction-github-pages@v1.2.5
+      with:
+        build_dir: public
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}

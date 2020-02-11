@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sandie Cabon" />
+  <title>Introduction to the methods for classification</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="site.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Introduction to the methods for classification</h1>
+<p class="author">Sandie Cabon</p>
+</header>
+<p>In many fields, research teams aim to model data for purposes going from better understanding of our world to prediction of the future. Although, historically, these problems were only tackled through statistical modeling, in the last decade, machine learning gained popularity. Indeed, machine learning is the branch of computer science that uses past experiences to take future decisions without a complete knowledge of all influencing elements <span class="citation" data-cites="bonaccorso2017machine">(Bonaccorso <a href="#ref-bonaccorso2017machine" role="doc-biblioref">2017</a>)</span>. Machine learning techniques can be divided in three main categories: supervised learning, unsupervised learning and reinforcement learning. In supervised approaches, such as classification or regression, the relationships between data and a targeted output are taught beforehand whereas for unsupervised techniques (e.g., clustering) relations and hidden patterns in data are independently found. Afterwards, both approaches can be included in reinforcement learning where the model will continue to learn from environment feedback.</p>
+<p>The world of machine learning is wide and is still in expansion. It would be difficult to go through all underlying concepts of artificial intelligence, and thus, this article mainly focuses on one aspect of machine learning: supervised learning for classification.</p>
+<section id="Formulation" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Problem formulation</h1>
+<p>The term "classification" covers all techniques that classify data into a given number of classes. Being part of the supervised branch of machine learning, classification requires a learning phase on labeled data to identify in which class a new data sample belongs to <span class="citation" data-cites="joshi2017artificial">(Joshi <a href="#ref-joshi2017artificial" role="doc-biblioref">2017</a>)</span>. Therefore, for classification problems, data has to be formed by the pair <span class="math inline">(\bm{X},Y)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> with the data description matrix <span class="math inline">\bm{X}</span> of size <span class="math inline">N</span> x <span class="math inline">p</span> and the set of labels <span class="math inline">Y</span> <span class="math inline">\in</span> <span class="math inline">\left\{c_1, \ldots, c_k\right\}</span>, where <span class="math inline">k</span> is the number of targeted classes, <span class="math inline">N</span> is the number of labeled samples and <span class="math inline">p</span> is the number of features which characterize each sample. More precisely, each sample <span class="math inline">i</span> of the data is described through the feature set <span class="math inline">X_i = [x_{i1}, x_{i2}\ldots, x_{ip}]</span>. This is depicted and illustrated by an example in Figure <a href="#dataForm" data-reference-type="ref" data-reference="dataForm">1</a>.</p>
+<figure>
+<img src="./figures/data.png" id="dataForm" alt="" /><figcaption>Data for classification summary (left), supplemented by a sleep state dataset example (right).<span label="dataForm"></span></figcaption>
+</figure>
+<p>Visually, each line of <span class="math inline">\bm{X}</span> contains the feature set of dimension <span class="math inline">p</span> that describe a sample. A sample is associated with an output class which is reported in <span class="math inline">Y</span> at the corresponding line. Hence, in the example, sleep data is formed by the pair <span class="math inline">(\bm{X},Y)</span>, where <span class="math inline">\bm{X}</span> is composed by <span class="math inline">N</span> instants. Four qualitative features are used to describe each instant (<span class="math inline">=</span> sample): Eyes, Breathing, Movement and Crying (<span class="math inline">p=4</span>). Associated sleep states are contained in <span class="math inline">Y</span>. Sleep states are labeled from 1 to 5 (<span class="math inline">k=5</span>). In the sleep dataset example, only qualitative features (i.e, descriptive) are presented although quantitative features (i.e., numeric) can also be integrated into <span class="math inline">\bm{X}</span>.</p>
+<p>To construct an accurate classification model, the process, depicted by Figure <a href="#processML" data-reference-type="ref" data-reference="processML">2</a> and described below, is generally followed <span class="citation" data-cites="dangeti2017statistics">(Dangeti <a href="#ref-dangeti2017statistics" role="doc-biblioref">2017</a>)</span>. It implies five steps: collection of the data, feature engineering, learning, testing and deployment.</p>
+<figure>
+<img src="./figures/process.png" id="processML" alt="" /><figcaption>Overview of the classification process from data collection to deployment.<span label="processML"></span></figcaption>
+</figure>
+<p>In fact, it is necessary to keep in mind these steps to avoid two major problems of machine learning: underfitting and overfitting. Underfitting characterizes a model which fails to generalize the data, usually, due to a lack of training samples. Reversely, overfitting occurs when a classifier corresponds too closely or exactly to a particular set of data and fails to fit future data.</p>
+<section id="collection-of-data" data-number="1.0.0.1">
+<h4 data-number="1.0.0.1"><span class="header-section-number">1.0.0.1</span> Collection of data</h4>
+<p>The data collection is an important step to construct an accurate classification model. The more various are the training samples, the better will be the classification when deploying the model. It is important to notice that data used to train are the only knowledge of the model and thus, if a given event is too much represented in the data, the model may overfit.</p>
+</section>
+<section id="feature-engineering" data-number="1.0.0.2">
+<h4 data-number="1.0.0.2"><span class="header-section-number">1.0.0.2</span> Feature engineering</h4>
+<p>One of the main challenges of classification is to provide an informative set of features regarding the targeted outputs of the model. In some cases, data may have to be processed first to extract describing features. One can think that the more features are extracted the better will be the model. However, a large big set of features can also lead to overfitting. This effect is known as the curse of dimensionality <span class="citation" data-cites="tang2014feature">(Tang, Alelyani, and Liu <a href="#ref-tang2014feature" role="doc-biblioref">2014</a>)</span>. To overcome this issue, it is sometimes necessary to reduce the feature set dimension <span class="math inline">p</span>. To do so, several techniques exist and are presented in Section <a href="#dimension" data-reference-type="ref" data-reference="dimension">2</a>.</p>
+</section>
+<section id="learning-phase" data-number="1.0.0.3">
+<h4 data-number="1.0.0.3"><span class="header-section-number">1.0.0.3</span> Learning phase</h4>
+<p>Once data have been prepared, the learning phase can be initiated. Most of the machine learning techniques depend on parameters and/or hyper-parameters<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> that need to be tuned to better fit the data (see Section <a href="#MLtech" data-reference-type="ref" data-reference="MLtech">3</a>). During the learning phase two datasets are usually used: the training and the validation dataset. We will see in Section <a href="#Evaluation" data-reference-type="ref" data-reference="Evaluation">4</a> that several approaches exist to divide the data to obtain both sets. In machine learning, parameters are tuned by covering a large scale of possible values and integrating them into the learning phase. Then, trained model is applied on the validation set and the set of parameters that will be retained is the one giving the best performances regarding the objective of classification. As the way of looking performances can change regarding the application, further details on this question are provided in Section <a href="#metrics" data-reference-type="ref" data-reference="metrics">4.1</a>.</p>
+</section>
+<section id="testing-the-algorithm-on-unseen-data" data-number="1.0.0.4">
+<h4 data-number="1.0.0.4"><span class="header-section-number">1.0.0.4</span> Testing the algorithm on unseen data</h4>
+<p>In order to ensure the quality of the model predictions, it is common in machine learning to apply the model on an additional test set of unseen (but labeled) data. This way, if high performances are observed at the learning phase but a poor generalization is observed on the test set, it is a direct indicator of overfitting.</p>
+</section>
+<section id="deployment-of-the-algorithm" data-number="1.0.0.5">
+<h4 data-number="1.0.0.5"><span class="header-section-number">1.0.0.5</span> Deployment of the algorithm</h4>
+<p>The last step of the process is to deploy the algorithm in order to make predictions on unlabeled real data. Normally, if the model has been correctly evaluated on a test set independently of the training phase, future classifications would be accurate. However, it can happen that the performances may be altered. Indeed, the annotated data, inherently to conditions of collection, can be unreliable to infer the whole population. Although it is a tough question to ensure a totally random and independent collection of data, it is important to keep in mind this limitation <span class="citation" data-cites="mitData">(Grimson, Guttag, and Bell <a href="#ref-mitData" role="doc-biblioref">2016</a>)</span>.<br />
+<br />
+In the following sections, further details are provided about dimensionality reduction methods, machine learning algorithms and evaluation techniques used for classification. An overview of the methods mentioned hereafter is proposed by Figure <a href="#mindmapML" data-reference-type="ref" data-reference="mindmapML">[mindmapML]</a>.</p>
+</section>
+</section>
+<section id="dimension" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Dimensionality reduction</h1>
+<p>Dimensionality reduction is the process of reducing the size of the feature set. Although this step is not mandatory, when the data are described by many features, performing dimensionality reduction is a good trick for, among others, the following reasons <span class="citation" data-cites="coelho2015building">(Coelho and Richert <a href="#ref-coelho2015building" role="doc-biblioref">2015</a>)</span>:</p>
+<ul>
+<li><p>Reduce the risk of overfitting;</p></li>
+<li><p>Speed up the learning phase;</p></li>
+<li><p>Lower the model computational complexity;</p></li>
+<li><p>Visualize data using a limited number of dimensions.</p></li>
+</ul>
+<p><embed src="./figures/mindmapML.pdf" /></p>
+<p>In practice, two main groups of dimensionality reduction methods are used: feature selection and feature extraction, sometimes also called feature projection. The main difference between these approaches is that feature extraction maps the original feature space into a lower-dimensional space while, in feature selection, a subset of the original feature set is selected. The choice to use either selection or extraction methods can depend on the objective of the model. If the objective is to better understand the influence of features on classes, feature selection is more suited. Indeed, in feature extraction, the new feature set obtained by projection is generally difficult to link with physical meaning <span class="citation" data-cites="tang2014feature">(Tang, Alelyani, and Liu <a href="#ref-tang2014feature" role="doc-biblioref">2014</a>)</span>.</p>
+<section id="feature-selection" data-number="2.1">
+<h2 data-number="2.1"><span class="header-section-number">2.1</span> Feature selection</h2>
+<p>Feature selection methods are used to select features that are the most suitable to discriminate samples that belong to different classes. Hence, the goal is to find the best subset of features among the <span class="math inline">2^p</span> candidate subsets <span class="citation" data-cites="dash1997feature">(Dash and Liu <a href="#ref-dash1997feature" role="doc-biblioref">1997</a>)</span>.</p>
+<p>Generally, the selection approach, depicted by Figure <a href="#processFeatureSelection" data-reference-type="ref" data-reference="processFeatureSelection">3</a>, combines feature subset evaluation and search algorithm. Several iterations are performed to search the best subset. For each iteration, a subset is evaluated and its "goodness" is returned.</p>
+<figure>
+<img src="./figures/featureselection.png" id="processFeatureSelection" alt="" /><figcaption>Framework of feature selection methods.<span label="processFeatureSelection"></span></figcaption>
+</figure>
+<p>When the original feature set is large, looking for all possibilities is greedy. Hence, computational complexity of the search can be reduced by heuristic or randomized methods to prevent an exhaustive search. These methods are associated with a stopping criterion on the "goodness".</p>
+<p>The "goodness" criterion depends on the applied method and objectives. Two main categories of methods stand out: filter models or wrapper models. In the filter approach, the "goodness" is related to information content of the subset while, in wrapper, it is the predictive performances, obtained on the validation set with the subset of features that is evaluated.</p>
+<section id="filter-methods" data-number="2.1.1">
+<h3 data-number="2.1.1"><span class="header-section-number">2.1.1</span> Filter methods</h3>
+<p>Filter models rely on the characteristics of the data without using any classification method <span class="citation" data-cites="liu2007computational">(Liu and Motoda <a href="#ref-liu2007computational" role="doc-biblioref">2007</a>)</span>. Typically, features are ranked and the highest ranked ones are selected. This can be done in two ways: univariate or multivariate. In the univariate scheme, each feature is ranked independently from others whereas all features are considered simultaneously in the multivariate approach. Several criteria have been applied to rank data. Among them, we can cite: quality (Fisher score <span class="citation" data-cites="duda2012pattern gu2012generalized">(Duda, Hart, and Stork <a href="#ref-duda2012pattern" role="doc-biblioref">2012</a>; Gu, Li, and Han <a href="#ref-gu2012generalized" role="doc-biblioref">2012</a>)</span>), independency (Chi-squared <span class="citation" data-cites="bonaccorso2017machine">(Bonaccorso <a href="#ref-bonaccorso2017machine" role="doc-biblioref">2017</a>)</span>), redundancy (information gain <span class="citation" data-cites="roobaert2006information">(Roobaert, Karakoulas, and Chawla <a href="#ref-roobaert2006information" role="doc-biblioref">2006</a>)</span>) or separation of class instances (ReliefF <span class="citation" data-cites="kira1992feature">(Kira and Rendell <a href="#ref-kira1992feature" role="doc-biblioref">1992</a>)</span>).</p>
+<p>Since filter models are easy to understand and implement, it is a popular technique. However, features are selected independently from classification and thus, filter models totally ignore the effects of the selected subset on the performance of the classification algorithm <span class="citation" data-cites="hall1999feature">(Hall and Smith <a href="#ref-hall1999feature" role="doc-biblioref">1999</a>)</span>.</p>
+</section>
+<section id="wrapper-methods" data-number="2.1.2">
+<h3 data-number="2.1.2"><span class="header-section-number">2.1.2</span> Wrapper methods</h3>
+<p>Wrapper models were developed to overcome the limitation of filter models. The subset evaluation is performed by integrating the classifier. Hence, the subset is adapted to the inherent particularities and bias of a predefined classifier <span class="citation" data-cites="tang2014feature">(Tang, Alelyani, and Liu <a href="#ref-tang2014feature" role="doc-biblioref">2014</a>)</span>. To find the best subset, a wide range of search strategies exists including hill-climbing, best-first, branch-and-bound, and genetic algorithms <span class="citation" data-cites="guyon2003introduction">(Guyon and Elisseeff <a href="#ref-guyon2003introduction" role="doc-biblioref">2003</a>)</span>. Two other popular methods are forward selection and backward elimination where features are respectively added or removed one by one.</p>
+<p>Wrapper models provide better predictive performances than filter models <span class="citation" data-cites="kohavi1997wrappers">(Kohavi and John <a href="#ref-kohavi1997wrappers" role="doc-biblioref">1997</a>)</span>. Nevertheless, they are more computationally expensive than filter models.</p>
+</section>
+</section>
+<section id="feature-extraction" data-number="2.2">
+<h2 data-number="2.2"><span class="header-section-number">2.2</span> Feature extraction</h2>
+<p>The concept under feature extraction is to project the original feature set of dimension <span class="math inline">p</span> into a lower-dimensional space of dimension <span class="math inline">m</span>.</p>
+<p>Two types of feature extraction methods can be distinguished depending on the way to combine the features: linear and non-linear. In linear feature extraction methods, new features in the lower dimensional space are given by a linear combination of the original feature set. Reversely, non-linear combinations are sought with non-linear approaches. Linear techniques being principally used, this section mainly focuses on this approach. The main challenge of linear feature extraction methods is to find a transformation <span class="math inline">\bm{W}</span>, such as: <span class="math display">\bm{Z} =  \bm{W}^T \bm{X}</span> where <span class="math inline">\bm{Z}</span> is the projected data set of size <span class="math inline">m * N</span>, with <span class="math inline">m &lt; p</span> and <span class="math inline">N</span> is the number of samples. Dimensionality reduction by the mean of linear feature extraction is depicted by Figure <a href="#FeatureExtraction" data-reference-type="ref" data-reference="FeatureExtraction">4</a> with an example of projection from a space of dimensions <span class="math inline">p = 2</span> to a space of dimension <span class="math inline">m=1</span>. This example shows that an infinite number of solutions exists to find a new axis to project data points. However, in the literature, two methods stand out: Principal Component Analysis (PCA) and Linear Discriminant Analysis (LDA) <span class="citation" data-cites="tang2014feature">(Tang, Alelyani, and Liu <a href="#ref-tang2014feature" role="doc-biblioref">2014</a>)</span>, described below.</p>
+<figure>
+<img src="./figures/featureExtraction.png" id="FeatureExtraction" alt="" /><figcaption>Feature extraction concept (left) and associated example (right). <span class="math inline">X_i</span> is the original feature set describing the sample <span class="math inline">i</span> and <span class="math inline">Z_i</span> is the extracted feature set. In the example, black dots represent data in a two-dimensional space and the red line represents an example of axis for projection in a one-dimensional space.<span label="FeatureExtraction"></span></figcaption>
+</figure>
+<section id="principal-component-analysis" data-number="2.2.1">
+<h3 data-number="2.2.1"><span class="header-section-number">2.2.1</span> Principal Component Analysis</h3>
+<p>Principal Component Analysis is a well-known technique of data transformation <span class="citation" data-cites="jolliffe2011principal">(Jolliffe <a href="#ref-jolliffe2011principal" role="doc-biblioref">2011</a>)</span>. In its standard formulation, it finds the most discriminant projection of the original feature set by maximizing the variance between data points. In practice, the eigenvectors of the covariance matrix, calculated from the original feature set, are computed. Then, the ones with the largest eigenvalues (principal components) are used to reconstruct a part of the variance of the original dataset.</p>
+<p>After that, there are two ways of using principal components regarding the objective of the analysis. The first one is data visualization. In that case, only two or three principal components, carying most of the variance, will be retrieved in order to plot the data in a two to three dimensional graph. This way, further analyses can be conducted regarding the distribution of data within the objective of class separation. Another purpose of PCA is to feed machine learning algorithms for classification purpose. With PCA, the reduction of dimension can be regulated by the total variance wanted for the feature subset. In other words, the number of principal components that are kept depends on the percent of variance information wanted by the user.</p>
+<p>The main limitation of PCA is that there is no guarantee that a small number of principal components with the highest variance will contain the information needed for the classification <span class="citation" data-cites="neal2006high">(Neal and Zhang <a href="#ref-neal2006high" role="doc-biblioref">2006</a>)</span>. Hence, relevant information can be lost and the resulting projected features <span class="math inline">\bm{Z}</span> can lead to weak classification performances. Additionally, PCA is only suited for quantitative set of feature. Other factor methods exists. Among them we can cite Multiple correspondence analysis <span class="citation" data-cites="le2010multiple">(Le Roux and Rouanet <a href="#ref-le2010multiple" role="doc-biblioref">2010</a>)</span> for qualitative feature set and factor analysis of mixed data for mixed feature set <span class="citation" data-cites="escofier2008analyses">(Escofier and Pagès <a href="#ref-escofier2008analyses" role="doc-biblioref">2008</a>)</span>. Moreover, a version of PCA, called kernel PCA, has been proposed to make non-linear projections <span class="citation" data-cites="scholkopf1997kernel">(Schölkopf, Smola, and Müller <a href="#ref-scholkopf1997kernel" role="doc-biblioref">1997</a>)</span>. Briefly, an initial step is first performed to find a particular space where the dataset becomes linearly separable <span class="citation" data-cites="bonaccorso2017machine">(Bonaccorso <a href="#ref-bonaccorso2017machine" role="doc-biblioref">2017</a>)</span>.</p>
+</section>
+<section id="LDAExtr" data-number="2.2.2">
+<h3 data-number="2.2.2"><span class="header-section-number">2.2.2</span> Linear Discriminant Analysis</h3>
+<p>Contrary to PCA, in Linear Discriminant Analysis, labels are integrated in the process of dimension reduction. LDA finds the most discriminant projection by maximizing between-class distance and minimizing the within-class distance <span class="citation" data-cites="balakrishnama1998linear">(Balakrishnama and Ganapathiraju <a href="#ref-balakrishnama1998linear" role="doc-biblioref">1998</a>)</span>.</p>
+<p>In practice, the eigenvectors of the between-class and within-class covariance matrices are computed and the best projection is found using Fisher’s criterion.</p>
+<figure>
+<img src="./figures/comparaisonLDAPCA2.png" id="CompLDAPCA" alt="" /><figcaption>Comparison of data projection between Principal Components Analysis and Linear Discriminant Analysis for a two-classes problem. Orange dots represent data of the first class and data belonging to the second class are reported in black. The red line represents the resulting axis for projection obtained for each method.<span label="CompLDAPCA"></span></figcaption>
+</figure>
+<p>A comparative example between PCA and LDA is given by Figure <a href="#CompLDAPCA" data-reference-type="ref" data-reference="CompLDAPCA">5</a>. For a two-class data example, the resulting axis that preserves the variance on the whole data set (PCA) and the one that preserves the distance between both classes (LDA) are drawn. We can see, on each axis, the resulting data projection. LDA offers, in that case, a better projection for discriminating purpose. In fact, besides dimensionality reduction, LDA can also be used for classification (see Section <a href="#LDAML" data-reference-type="ref" data-reference="LDAML">3.1.3</a>).</p>
+</section>
+</section>
+</section>
+<section id="MLtech" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Machine learning algorithms</h1>
+<p>As mentioned in Section <a href="#Formulation" data-reference-type="ref" data-reference="Formulation">1</a>, a supervised machine learning technique is an algorithm that learns from past experiences (training set) a model to make future predictions.</p>
+<p>Classifiers<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> aim to find the best decision boundaries to discriminate between classes. As illustrated by Figure <a href="#LinearVsNonLinear" data-reference-type="ref" data-reference="LinearVsNonLinear">6</a>, there are two types of classification cases: the ones where classes can be separated with linear boundaries and the ones where classes are not linearly separable.</p>
+<figure>
+<img src="./figures/LinearNonLinear.png" id="LinearVsNonLinear" alt="" /><figcaption>Illustration of a linearly separable case (left) and a non-linearly separable case (right). Red lines represent examples of boundary decisions.<span label="LinearVsNonLinear"></span></figcaption>
+</figure>
+<p>Hence, classifiers can be divided in two groups: linear algorithm and non-linear algorithms. To illustrate the different approaches used to solve classification problems, in this section, we will go through eight commonly used classifiers.</p>
+<section id="linear-algorithms" data-number="3.1">
+<h2 data-number="3.1"><span class="header-section-number">3.1</span> Linear algorithms</h2>
+<p>Linear classifiers aim to find a linear decision boundary between classes. It can either be a line, a plane or a hyperplane, depending on the dimension of the problem.</p>
+<section id="perceptron" data-number="3.1.1">
+<h3 data-number="3.1.1"><span class="header-section-number">3.1.1</span> Perceptron</h3>
+<p>The most basic linear model is the perceptron <span class="citation" data-cites="rosenblatt1958perceptron">(Rosenblatt <a href="#ref-rosenblatt1958perceptron" role="doc-biblioref">1958</a>)</span>, depicted in Figure <a href="#Perceptron" data-reference-type="ref" data-reference="Perceptron">7</a>.</p>
+<figure>
+<img src="./figures/perceptron.png" id="Perceptron" alt="" /><figcaption>Illustration of a perceptron with two inputs.<span label="Perceptron"></span></figcaption>
+</figure>
+<p>In this example, the perceptron output decision <span class="math inline">y_i</span>, which can either be <span class="math inline">-1</span> or <span class="math inline">+1</span>, is computed for each sample <span class="math inline">i</span> as: <span class="math display">y_i = f(w_1x_{i1} + w_2x_{i2})</span> where <span class="math inline">f</span> is a step function, also called threshold or activation function. This can be generalized for a larger dimension <span class="math inline">p</span> by: <span class="math display">\label{linearEquation}
+Y = f(W^T\bm{X}+b)</span> where <span class="math inline">W</span> is the weight vector defined as <span class="math inline">W = \left\{ w_1, w_2, \ldots, w_p \right\}</span> and <span class="math inline">b</span> is the bias.</p>
+<p>To summarize, to make a prediction, the perceptron computes two quantities. First, the weighted sum of the input features is calculated. Then, this sum is thresholded by the function <span class="math inline">f</span> in order to retrieve a prediction equal to <span class="math inline">-1</span> or <span class="math inline">+1</span>.</p>
+<p>During the training phase, <span class="math inline">W</span> is firstly randomly initialized. Then, weights are settled by considering all the samples of the training set and looking at the output decision <span class="citation" data-cites="shiffman2012nature">(Shiffman <a href="#ref-shiffman2012nature" role="doc-biblioref">2012</a>)</span>. It is performed in three steps which are repeated until all training samples are correctly classified:</p>
+<ol>
+<li><p>Make a prediction for an input sample;</p></li>
+<li><p>Compute the error <span class="math inline">\epsilon</span> between the prediction and real label;</p></li>
+<li><p>Adjust the new vector of weights <span class="math inline">W&#39;</span> accordingly to the error, such as: <span class="math display">W&#39; = W + \Delta W</span></p></li>
+</ol>
+<p>where <span class="math inline">\Delta W =</span> <span class="math inline">\epsilon</span> x <span class="math inline">\eta</span> x <span class="math inline">X_i</span>, with <span class="math inline">\eta</span>, called the learning rate<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and <span class="math inline">X_i</span>, the input features of the sample.</p>
+<p>So far, we presented a two-class classification approach. In case of multiclass problems, several perceptrons can be trained in order to predict each class versus all others (one-versus-the-rest).</p>
+<p>The power of perceptron classifiers resides in the fact that if a linear boundary exists to discriminate classes, the model will converge perfectly. However, in most classification problems, an overlap exists between classes and perceptron models will necessary present misclassification.</p>
+</section>
+<section id="logistic-regression" data-number="3.1.2">
+<h3 data-number="3.1.2"><span class="header-section-number">3.1.2</span> Logistic Regression</h3>
+<p>Logistic Regression (LR) is quite similar to perceptron except that instead of a class prediction, it returns a probability of belonging to the positive class. Hence, in some cases, it may be more robust to class overlap. To compare between perceptron and logistic regression lets restart from Equation (<a href="#linearEquation" data-reference-type="ref" data-reference="linearEquation">[linearEquation]</a>). In logistic regression, <span class="math inline">b</span> is commonly renamed <span class="math inline">w_0</span>, the model intercept. Then, for each sample, a score <span class="math inline">S(X_i)</span> is computed as: <span class="math display">S(X_i) = f(W^TX_i+w_0)</span></p>
+<p>In logistic regression, <span class="math inline">f</span> is fixed and is called the logistic (or sigmoid) function. The sigmoid function, depicted by Figure <a href="#sigmoid" data-reference-type="ref" data-reference="sigmoid">8</a>, is used to associate each score to a probability bounded between <span class="math inline">0</span> and <span class="math inline">1</span>, such as: <span class="math display">P(Y_i) = f(S(X_i))</span></p>
+<figure>
+<img src="./figures/sigmoid.png" id="sigmoid" alt="" /><figcaption>Sigmoid function.<span label="sigmoid"></span></figcaption>
+</figure>
+<p>After that, a cut-off value is usually applied on the probability to obtain the class output.</p>
+<p>In the learning phase, the vector of weights <span class="math inline">W</span> has to be estimated. Here, the best <span class="math inline">W</span> is the one that maximizes the conditional probabilities <span class="math inline">P(Y|\bm{X}, W)</span> on the training set. This is commonly done by Maximum Likelihood Estimation (MLE), based on the assumption that weights are normally distributed <span class="citation" data-cites="czepiel2002maximum">(Czepiel <a href="#ref-czepiel2002maximum" role="doc-biblioref">2002</a>)</span>.</p>
+<p>Logistic regression is usually applied for binary classification. However, as well as perceptron, it is possible to extend it to multiclass problems by training several one-versus-the-rest LR classifiers.</p>
+</section>
+<section id="LDAML" data-number="3.1.3">
+<h3 data-number="3.1.3"><span class="header-section-number">3.1.3</span> Linear Discriminant Analysis</h3>
+<p>As mentioned in Section <a href="#LDAExtr" data-reference-type="ref" data-reference="LDAExtr">2.2.2</a>, Linear Discriminant Analysis can be used for feature extraction. It can also be applied for classification purpose. Contrary to previous linear methods, LDA is more suited for multiclass analysis <span class="citation" data-cites="rao1948tests">(Rao <a href="#ref-rao1948tests" role="doc-biblioref">1948</a>)</span>. We saw that LDA aims to find the best projection by maximizing the mean between-class distances while minimizing the within-class variance. For multiclass problems, a initial step is added to compute the overall mean (= center) of the data. Then, it is the distance between each class and this center that is maximized while minimizing the within-class variance.</p>
+<p>In this way, distributions (means and variance) of each class are estimated. Thus, by the use of Bayes’ theorem, the probability of a sample to belong to each class can be estimated. For future predictions, the class associated with the higher probability will be returned.</p>
+<p>Nevertheless, LDA presents two main limitations. The first one is due to the number of samples for each class in the training set. If a class is under-represented, the estimated distribution for this class will be corrupted. Secondly, as previous methods, LDA is more suitable on linearly separable multiclass problems.</p>
+</section>
+</section>
+<section id="non-linear-algorithms" data-number="3.2">
+<h2 data-number="3.2"><span class="header-section-number">3.2</span> Non-linear algorithms</h2>
+<p>In case of non-linear problems, where class boundaries cannot be approximated by hyperplanes, non-linear algorithms may be more reliable than linear classifiers.</p>
+<section id="k-nearest-neighbors" data-number="3.2.1">
+<h3 data-number="3.2.1"><span class="header-section-number">3.2.1</span> K-Nearest Neighbors</h3>
+<p>K-Nearest Neighbors is a basic method used for classification. Basically, it computes all the distances between a new sample and the ones of the training set. Then, the majority class of its neighbors is assigned to it. The number of neighbors that contributes to the vote is determined by <span class="math inline">k</span>.</p>
+<figure>
+<img src="./figures/KNNIlustration.png" id="KNNEx" alt="" /><figcaption>Example of K-nearest neighbors classification with <span class="math inline">k=3</span>.<span label="KNNEx"></span></figcaption>
+</figure>
+<p>An example of KNN classification, with <span class="math inline">k=3</span>, is given by Figure <a href="#KNNEx" data-reference-type="ref" data-reference="KNNEx">9</a>. In this example, the class of a new sample (in blue) is sought. The distance with all others points of the learning set is computed. Labels of the 3 nearest neigbours are checked. With two neighbors belonging to class "Black" and one to class "Orange", the new sample is classified as a "Black" sample.</p>
+<p>Although Hamming, Manhattan or Minkowski distances can be used, KNN classifier is commonly based on the Euclidean distance. The Euclidean distance between a sample of the training set <span class="math inline">X_{i}</span> and a new sample <span class="math inline">X_{n}</span>, is computed as: <span class="math display">d(X_{i},X_{n}) = \sqrt{(x_{i1}-x_{n1})^2+(x_{i2}-x_{n2})^2+\ldots+(x_{ip}-x_{np})^2}</span> To compute an accurate distance, it is necessary to work on homogeneous features (i.e., with the same scale). Indeed, absolute differences in features must weight the same to avoid the computation of a meaningless distance.</p>
+<p>KNN is a popular algorithm in classification due to its simplicity. In fact, the algorithm is intuitive and easy to implement. Additionally, it can perform well for both linear and non-linear cases.</p>
+<p>However, KNN has some drawbacks. It is easily subject to overfitting, especially when working with an imbalanced training dataset.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> In addition, it can require a lot of memory for future predictions since it needs the training data samples to compute distances.</p>
+</section>
+<section id="DT" data-number="3.2.2">
+<h3 data-number="3.2.2"><span class="header-section-number">3.2.2</span> Decision tree</h3>
+<p>Decision tree is a predictive model approach which is constructed as a tree-shaped diagram, composed by nodes, branches and leaves. It provides the statistical probability of a class to occur. An example of tree architecture, for a four classes problem and a feature set of three components, is provided in Figure <a href="#TreeEx" data-reference-type="ref" data-reference="TreeEx">10</a>.</p>
+<figure>
+<img src="./figures/DT.png" id="TreeEx" alt="" /><figcaption>Tree architecture for a four classes examples, where <span class="math inline">x_{i1}</span>, <span class="math inline">x_{i3}</span> and <span class="math inline">x_{i3}</span> are the feature set of a sample <span class="math inline">i</span> and <span class="math inline">y_i</span> is the predicted class. <span class="math inline">T_1</span>, <span class="math inline">T_2</span>, <span class="math inline">T_3</span> are three thresholds.<span label="TreeEx"></span></figcaption>
+</figure>
+<p>The prediction for a new sample is given using a succession of small tests. Each node corresponds to a test until a leaf, giving the overall output decision, is reached. Hence, in the tree example, if a new data sample <span class="math inline">n</span> has:</p>
+<ul>
+<li><p>its feature <span class="math inline">x_{n2}</span> is superior to <span class="math inline">T_2</span>;</p></li>
+<li><p>its feature <span class="math inline">x_{n1}</span> is inferior to <span class="math inline">T_1</span>;</p></li>
+<li><p>its feature <span class="math inline">x_{n3}</span> is inferior to <span class="math inline">T_3</span>.</p></li>
+</ul>
+<p>Then, there is a probability of 0.9 that it belongs to class 3 and a probability of 0.1 to belong to class 1. Generally, the highest probability is retained, making "class 3" the final decision for this sample.</p>
+<p>In the training phase, two elements are determined: the architecture (e.g., the order of the considered features, the number of nodes and leaves) and threshold for each feature. A decision tree is constructed following these steps:</p>
+<ol>
+<li><p>Split the training set by thresholding a feature;</p></li>
+<li><p>Compute a measure of the quality of the split;</p></li>
+<li><p>Repeat Step 1 and Step 2 until all the splitting possibilities (all thresholds for all features that wasn’t used in previous nodes) are associated with a quality measurement;</p></li>
+<li><p>If the split with the best quality measurement improves the classification of the previous node, it is a new node. Otherwise, the previous node was better and is turned into a leaf.</p></li>
+<li><p>Repeat all the previous steps until only leaves can be reached.</p></li>
+</ol>
+<p>To measure the quality of a split, a criterion based on impurity (e.g., Gini’s) or information gain (e.g., entropy) can be used <span class="citation" data-cites="dangeti2017statistics">(Dangeti <a href="#ref-dangeti2017statistics" role="doc-biblioref">2017</a>)</span>. In practice, it is often the Gini’s impurity that is applied: <span class="math display">Gini = 1 - \sum_{c=1}^C P(c)^2</span> where <span class="math inline">C</span> is the number of classes and <span class="math inline">P(c)</span> is the fraction of samples of class <span class="math inline">c</span> observed after the split. The lower is the Gini’s criterion, the better is the split.</p>
+<p>Decision trees are easy to understand and interpret. Additionally, they require very few data preparation (such as scaling in KNN) since splits are independently made for each feature. However, they can easily lead to overfitting if the set of features is too wide. As KNN, they are also sensitive to imbalanced dataset since the number of samples in each class impacts the quality criterion.</p>
+</section>
+<section id="random-forests" data-number="3.2.3">
+<h3 data-number="3.2.3"><span class="header-section-number">3.2.3</span> Random Forests</h3>
+<p>Random Forest is a part of "ensemble methods" of machine learning. Ensemble methods are based on the assumption that diversified and independent models tend to give better classification results. Therefore, Random Forest is a combination of tree predictors <span class="citation" data-cites="breiman2001random">(Breiman <a href="#ref-breiman2001random" role="doc-biblioref">2001</a>)</span>. The classification result comes from the majority vote of a collection of decision trees (also called bagging). In fact, it aims to enhance the generalization by averaging multiple decision trees trained on different parts of the same training set. Figure <a href="#RFEx" data-reference-type="ref" data-reference="RFEx">11</a> shows the workflow for a new prediction with a RF model of <span class="math inline">E</span> trees.</p>
+<figure>
+<img src="./figures/RF.png" id="RFEx" alt="" /><figcaption>Prediction workflow with a Random Forest model composed by <span class="math inline">E</span> trees. Successive test results for each tree are reported in green.<span label="RFEx"></span></figcaption>
+</figure>
+<p>In the learning phase, each tree is growing, as described in Section <a href="#DT" data-reference-type="ref" data-reference="DT">3.2.2</a>, from a randomly selected subset of the feature set. In this way, each tree is growing with different features. Indeed, if the whole feature set was used, significant features would always come first in the top nodes of splitting which would make all trees be more or less similar.</p>
+<p>Random forest is a very popular learning method that can reach really high performances. Contrary to previous methods, it can be robust to imbalanced dataset since a prior knowledge of class occurrences can be integrated in the algorithm. However, results are difficult to interpret since it can be constructed with hundreds of trees. Additionally, sometimes, RF can overfit due to a too noisy dataset (i.e., with a lot of outliers/extreme cases).</p>
+</section>
+<section id="support-vector-machines" data-number="3.2.4">
+<h3 data-number="3.2.4"><span class="header-section-number">3.2.4</span> Support Vector Machines</h3>
+<p>Support Vector Machines are suited for both linear and non-linear problems <span class="citation" data-cites="cortes1995support">(Cortes and Vapnik <a href="#ref-cortes1995support" role="doc-biblioref">1995</a>)</span>. The aim of SVM is to find the hyperplane boundary that leaves the maximum margin between two classes. Figure <a href="#SVMEx" data-reference-type="ref" data-reference="SVMEx">12</a> illustrates the SVM terminology on a linear example.</p>
+<figure>
+<img src="./figures/SVM.png" id="SVMEx" alt="" /><figcaption>Example of a linear boundary estimated by SVM for a two class problem.<span label="SVMEx"></span></figcaption>
+</figure>
+<p>In the learning phase, the basis of SVM is the perceptron. This time, the vector of weights <span class="math inline">W</span> is estimated ensuring that the margin is maximized between the support vectors of both classes. Support vectors are the data points of both classes which are near the hyperplane. Generally, a parameter <span class="math inline">g</span> defines the quantities of points that will be taken into account while estimating <span class="math inline">W</span>. The highest is <span class="math inline">g</span>, the less support vectors will be used. For multiclass problem, the one-versus-the-rest strategy is often used.</p>
+<p>The main strength of SVM is what is commonly called the "kernel trick". The idea is to apply a transformation <span class="math inline">\phi</span> to the dataset in order to work on a space where data are linearly separable. An example of kernel transformation is given by Figure <a href="#KernelEx" data-reference-type="ref" data-reference="KernelEx">13</a>.</p>
+<figure>
+<img src="./figures/KernelTrick.png" id="KernelEx" alt="" /><figcaption>Example of kernel transformation <span class="math inline">\phi</span> and boundary estimation (in red) with SVM.<span label="KernelEx"></span></figcaption>
+</figure>
+<p>A wide variety of kernel transformations can be used such as polynomial, radial basis function or sigmoid as well as customized kernels.</p>
+<p>Support Vector Machines is a widely used machine learning algorithm. Contrary to RF, it is robust to extreme cases since the hyperplane boundary is computed from support vectors. The main drawback of SVM is that a lot of parameters, depending on the kernel, has to be tuned and finding the best set of parameters can be computationally expensive.</p>
+</section>
+<section id="multi-layer-perceptron" data-number="3.2.5">
+<h3 data-number="3.2.5"><span class="header-section-number">3.2.5</span> Multi-Layer Perceptron</h3>
+<p>Multi-Layer Perceptron (MLP) is a feedforward artificial neural network. Although a sole perceptron is limited to linear situations, Artificial Neural Networks (ANN) have been constructed in order to solve non-linear problems. There are composed by one input layer, at least one hidden layer and one output layer. Hidden layers and output layers are made up of perceptrons that are all connected from a layer to another. Figure <a href="#MLPEx" data-reference-type="ref" data-reference="MLPEx">14</a> depicts an example of MLP with two hidden layers.</p>
+<figure>
+<img src="./figures/MLP.png" id="MLPEx" alt="" /><figcaption>Example of multi-layer perceptron with 2 hidden layers and two output classes.<span label="MLPEx"></span></figcaption>
+</figure>
+<p>Predictions are made by feeding the feature set of a sample to the network. Then, perceptrons are progressively activated (or not) until reaching an output node which gives the predicted class. Contrary to the linear case, the activation function of each perceptron is non-linear. Among them, we can cite hyperbolic tangent, rectified linear unit function or sigmoid.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>For the learning phase, MLP uses a supervised technique called backpropagation. As for the linear case, all samples are passed through the network and weights <span class="math inline">W</span> are updated according to the output error <span class="citation" data-cites="parizeau2004perceptron">(Parizeau <a href="#ref-parizeau2004perceptron" role="doc-biblioref">2004</a>)</span>. Weights of each perceptron are updated one-by-one, starting from the ones of the output layer.</p>
+<p>Neural network is a field in expansion notably because of improvement in computing capacities. Nowadays, neural networks can be composed of a large amount of hidden layers, increasing their depth. This increase of the computing capabilities leads to an evolution of Neural Networks (e.g., Convolutional Neural Networks, Recurrent Neural Networks) to what is today commonly called deep learning. The main drawback of neural networks is that it involves a lot of parameters to tune (e.g., number of layers, number of perceptrons per layer, connections between layers). In addition, it is also subject to overfit if the training set is too small or not representative of the whole population. Although today, various complex problems can be solved with deep learning, it is important to remind that it exists alternatives (e.g.,SVM, RF) that are faster, easier to train and can provide better performances regarding the classification objective.</p>
+</section>
+</section>
+</section>
+<section id="Evaluation" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Techniques for performance evaluation</h1>
+<p>As briefly mentioned in Section <a href="#Formulation" data-reference-type="ref" data-reference="Formulation">1</a>, evaluation strategies can change regarding the classification objectives, as well as considering the available data. This section firstly focuses on the metrics that are used to evaluate the performances. Secondly, we will go through different techniques used to split an annotated dataset in order to ensure good results for future predictions.</p>
+<section id="metrics" data-number="4.1">
+<h2 data-number="4.1"><span class="header-section-number">4.1</span> Metrics</h2>
+<p>Parameters and hyper-parameters of machine learning algorithms are tuned by maximizing the performances metrics. Additionally, performance metrics are mandatory to compare the results of different classifiers. In practice, most of performance metrics are based on the confusion matrix, reporting the number of good classifications and misclassifications by comparing the predicted with actual labels. A confusion matrix for a two class problem is reported in Figure <a href="#MC" data-reference-type="ref" data-reference="MC">15</a>. It is composed of four numbers:</p>
+<ul>
+<li><p>True Positive <span class="math inline">TP</span>: number of samples correctly classified as yes;</p></li>
+<li><p>True Negative <span class="math inline">TN</span>: number of samples correctly classified as no;</p></li>
+<li><p>False Positive <span class="math inline">FP</span>: number of samples classified as ’yes’ instead of no;</p></li>
+<li><p>False Negative <span class="math inline">FN</span>: number samples classified as ’no’ instead of yes.</p></li>
+</ul>
+<figure>
+<img src="./figures/ConfusionMatrix.png" id="MC" alt="" /><figcaption>Confusion matrix for a two class classification.<span label="MC"></span></figcaption>
+</figure>
+<p>From there, the overall classification accuracy <span class="math inline">Acc</span> measures the total of good classification over the whole data set: <span class="math display">Acc = \frac{TP+TN}{TP+FP+TN+FN}</span></p>
+<p>Measuring the accuracy of a classification is important to give an insight on what the algorithm is capable of. However, it is not always the best way of looking. In fact, for example, in case of imbalanced dataset, a class can take the lead on the accuracy metric and a very high value can be observed even if a less represented class is never detected. Actually, it is often the case in biomedical engineering, notably when working on rare incident diseases. For example, for disease screening, it may be better to hand up with some false positive cases than missing one patient. Reversely, in some cases, it may be more important to be sure that samples predicted as belonging to a class really belongs to this class.</p>
+<p>For these reasons, it exists a bunch of metrics which analyze the performances in different ways. A list of the more common ones is provided hereafter.</p>
+<p>Historically, sensitivity and specificity are used to precise classification results:</p>
+<ul>
+<li><p>Sensitivity <span class="math inline">Se</span>, which measures the proportion of actual positives that are correctly identified as such: <span class="math display">Se = \frac{TP}{FN+TP}</span></p></li>
+<li><p>Specificity <span class="math inline">Sp</span>, which measures the proportion of actual negatives that are correctly identified as such: <span class="math display">Sp = \frac{TN}{FP+TN}</span></p></li>
+</ul>
+<p>Recently, with the gain of popularity of machine learning, recall, precision and F-scores are commonly used:</p>
+<ul>
+<li><p>Recall <span class="math inline">R</span>, corresponds to <span class="math inline">Se</span>: <span class="math display">R = \frac{TP}{FN+TP}</span></p></li>
+<li><p>Precision <span class="math inline">P</span>, also known as the Positive Predictive Value (PPV), which measures the fraction of actual positives among the retrieved positive cases: <span class="math display">P = \frac{TP}{TP+FP}</span></p></li>
+<li><p>F1-score <span class="math inline">F_1</span> is the harmonic mean of precision and recall and allows a single measure of performance: <span class="math display">F_1 = \frac{2 \cdot P \cdot R}{P + R}</span></p></li>
+<li><p><span class="math inline">F_\beta</span> score, which is the weighted (according to <span class="math inline">\beta</span>) harmonic average of precision and recall: <span class="math display">F_{\beta} = \frac{(1+ \beta)^2 \cdot (P \cdot R)}{(\beta^2 + P + R)}</span></p></li>
+</ul>
+<p>All these metrics are bounded between 0 and 1, where a value of one means a perfect score. Until there, it may seem that these metrics are only applied on two class problems. However, all these performance measurements can be generalized to multiclass problems, notably by constructing a confusion matrix of one-versus-the-rest for each class.</p>
+</section>
+<section id="cross-validation" data-number="4.2">
+<h2 data-number="4.2"><span class="header-section-number">4.2</span> Cross-validation</h2>
+<p>In order to validate the classifier abilities to make future predictions, several evaluation strategies can be followed. Cross-validation is the most popular method that helps to ensure the robustness of a classifier since it allows the detection of underfitting or overfitting <span class="citation" data-cites="dangeti2017statistics">(Dangeti <a href="#ref-dangeti2017statistics" role="doc-biblioref">2017</a>)</span>. In this section, three popular techniques of cross-validation are presented: Hold-out, K-fold cross-validation and Leave-one-out cross-validation.</p>
+<section id="hold-out" data-number="4.2.1">
+<h3 data-number="4.2.1"><span class="header-section-number">4.2.1</span> Hold-out</h3>
+<p>The hold-out method is the simplest cross-validation technique. Data is divided into two parts: the training set and the testing set, as depicted by Figure <a href="#holdout" data-reference-type="ref" data-reference="holdout">16</a>.</p>
+<figure>
+<img src="./figures/holdout.png" id="holdout" alt="" /><figcaption>Illustration of the hold-out strategy.<span label="holdout"></span></figcaption>
+</figure>
+<p>This way, the classifier is trained on the training set and can be evaluated on unseen data of the testing set. Usually, a larger part of the data is used for training. There is two different ways to divide the data: by randomly selecting a number of samples over the whole dataset or by randomly selecting a number of samples of each class, in order to ensure a representation of all classes in the training and in the testing set. This method is usually applied for small datasets.</p>
+</section>
+<section id="k-fold-cross-validation" data-number="4.2.2">
+<h3 data-number="4.2.2"><span class="header-section-number">4.2.2</span> k-fold cross-validation</h3>
+<p>One way to improve the hold-out strategy is to perform a <span class="math inline">k</span>-fold cross-validation to tune the parameters and train the model. The idea is to train the model on <span class="math inline">k</span> different data splits to ensure its robustness. For each iteration, a training set and a validation set are constructed. An example of 3-fold cross-validation is provided by Figure <a href="#kfold" data-reference-type="ref" data-reference="kfold">17</a>.</p>
+<figure>
+<img src="./figures/kfold.png" id="kfold" alt="" /><figcaption>Illustration of the 3-fold cross-validation strategy.<span label="kfold"></span></figcaption>
+</figure>
+<p>For better control on the classifier performances, it is also recommended to work with an additional set, that wasn’t seen during the learning phase and the tuning of the parameters. This set is called the testing set. Hence, in Figure <a href="#kfold" data-reference-type="ref" data-reference="kfold">17</a>, the 3-fold cross-validation step is only performed on a part of the data.</p>
+</section>
+<section id="leave-one-out-cross-validation" data-number="4.2.3">
+<h3 data-number="4.2.3"><span class="header-section-number">4.2.3</span> Leave-one-out cross-validation</h3>
+<p>Leave-one-out cross-validation (LOOCV) is the extreme k-fold validation, where <span class="math inline">k</span> is equal to the number of samples in the training/validation dataset. An example of LOOCV is depicted by Figure <a href="#LOOCV" data-reference-type="ref" data-reference="LOOCV">18</a>.</p>
+<figure>
+<img src="./figures/loocv.png" id="LOOCV" alt="" /><figcaption>Illustration of the leave-one-out cross-validation strategy for a training/validation dataset of 20 samples.<span label="LOOCV"></span></figcaption>
+</figure>
+<p>Another way to perform LOOCV exists in biomedical engineering. In fact, to evaluate the capacity of classifiers to work with a new patient, a leave-one-patient-out strategy is often performed by working on all patients except one at each time. Performances for each draw indicate the generalization of the model to make future predictions for a new patient.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<p>Here, key concepts of machine learning for classification were presented. Hence, the process of designing a new classifier was described. It goes from the data collection to the deployment of a new model to make future predictions. We saw that at each step of the design there are some considerations to keep in mind to avoid the construction of non-generalized classifiers. Ensuring the robustness of a model can be done either by carefully selecting or extracting relevant features or by correctly tuning classifier regarding our objective as well as using an accurate evaluation strategy.</p>
+<p>However, the main issue remains the construction of an informative database. In fact, if the dataset is not representative of the reality, all necessary precautions can be taken to avoid underfitting or overfitting, it will be impossible to get to a generalized model.</p>
+</section>
+<section id="bibliography" class="unnumbered" data-number="">
+<h1 class="unnumbered" data-number="">References</h1>
+<div id="refs" class="references hanging-indent" role="doc-bibliography">
+<div id="ref-balakrishnama1998linear">
+<p>Balakrishnama, Suresh, and Aravind Ganapathiraju. 1998. “Linear Discriminant Analysis-a Brief Tutorial.” <em>Institute for Signal and Information Processing</em> 18: 1–8.</p>
+</div>
+<div id="ref-bonaccorso2017machine">
+<p>Bonaccorso, Giuseppe. 2017. <em>Machine Learning Algorithms</em>. Packt Publishing Ltd.</p>
+</div>
+<div id="ref-breiman2001random">
+<p>Breiman, Leo. 2001. “Random Forests.” <em>Machine Learning</em> 45 (1): 5–32.</p>
+</div>
+<div id="ref-coelho2015building">
+<p>Coelho, Luis Pedro, and Willi Richert. 2015. <em>Building Machine Learning Systems with Python</em>. Packt Publishing Ltd.</p>
+</div>
+<div id="ref-cortes1995support">
+<p>Cortes, Corinna, and Vladimir Vapnik. 1995. “Support-Vector Networks.” <em>Machine Learning</em> 20 (3): 273–97.</p>
+</div>
+<div id="ref-czepiel2002maximum">
+<p>Czepiel, Scott A. 2002. “Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.” <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.</p>
+</div>
+<div id="ref-dangeti2017statistics">
+<p>Dangeti, Pratap. 2017. <em>Statistics for Machine Learning</em>. Packt Publishing Ltd.</p>
+</div>
+<div id="ref-dash1997feature">
+<p>Dash, Manoranjan, and Huan Liu. 1997. “Feature Selection for Classification.” <em>Intelligent Data Analysis</em> 1 (1-4): 131–56.</p>
+</div>
+<div id="ref-duda2012pattern">
+<p>Duda, Richard O, Peter E Hart, and David G Stork. 2012. <em>Pattern Classification</em>. John Wiley &amp; Sons.</p>
+</div>
+<div id="ref-escofier2008analyses">
+<p>Escofier, Brigitte, and Jérôme Pagès. 2008. <em>Analyses Factorielles Simples et Multiples. Objectifs Méthodes et Interprétation</em>. Dunod.</p>
+</div>
+<div id="ref-mitData">
+<p>Grimson, Eric, John Guttag, and Ana Bell. 2016. “Introduction to Computational Thinking and Data Science.” MIT OpenCourseWare, https://ocw.mit.edu. Massachusetts Institute of Technology.</p>
+</div>
+<div id="ref-gu2012generalized">
+<p>Gu, Quanquan, Zhenhui Li, and Jiawei Han. 2012. “Generalized Fisher Score for Feature Selection.” <em>arXiv Preprint arXiv:1202.3725</em>.</p>
+</div>
+<div id="ref-guyon2003introduction">
+<p>Guyon, Isabelle, and André Elisseeff. 2003. “An Introduction to Variable and Feature Selection.” <em>Journal of Machine Learning Research</em> 3 (Mar): 1157–82.</p>
+</div>
+<div id="ref-hall1999feature">
+<p>Hall, Mark A, and Lloyd A Smith. 1999. “Feature Selection for Machine Learning: Comparing a Correlation-Based Filter Approach to the Wrapper.” In <em>FLAIRS Conference</em>, 1999:235–39.</p>
+</div>
+<div id="ref-jolliffe2011principal">
+<p>Jolliffe, Ian. 2011. <em>Principal Component Analysis</em>. Springer.</p>
+</div>
+<div id="ref-joshi2017artificial">
+<p>Joshi, Prateek. 2017. <em>Artificial Intelligence with Python</em>. Packt Publishing Ltd.</p>
+</div>
+<div id="ref-kira1992feature">
+<p>Kira, Kenji, and Larry A Rendell. 1992. “The Feature Selection Problem: Traditional Methods and a New Algorithm.” In <em>Aaai</em>, 2:129–34.</p>
+</div>
+<div id="ref-kohavi1997wrappers">
+<p>Kohavi, Ron, and George H John. 1997. “Wrappers for Feature Subset Selection.” <em>Artificial Intelligence</em> 97 (1-2): 273–324.</p>
+</div>
+<div id="ref-le2010multiple">
+<p>Le Roux, Brigitte, and Henry Rouanet. 2010. <em>Multiple Correspondence Analysis</em>. Vol. 163. Sage.</p>
+</div>
+<div id="ref-liu2007computational">
+<p>Liu, Huan, and Hiroshi Motoda. 2007. <em>Computational Methods of Feature Selection</em>. CRC Press.</p>
+</div>
+<div id="ref-neal2006high">
+<p>Neal, Radford M, and Jianguo Zhang. 2006. “High Dimensional Classification with Bayesian Neural Networks and Dirichlet Diffusion Trees.” In <em>Feature Extraction</em>, 265–96. Springer.</p>
+</div>
+<div id="ref-parizeau2004perceptron">
+<p>Parizeau, Marc. 2004. “Le Perceptron Multicouche et Son Algorithme de Rétropropagation Des Erreurs.” <em>Département de Génie électrique et de Génie Informatique, Université de Laval</em>.</p>
+</div>
+<div id="ref-rao1948tests">
+<p>Rao, C Radhakrishna. 1948. “Tests of Significance in Multivariate Analysis.” <em>Biometrika</em> 35 (1/2): 58–79.</p>
+</div>
+<div id="ref-roobaert2006information">
+<p>Roobaert, Danny, Grigoris Karakoulas, and Nitesh V Chawla. 2006. “Information Gain, Correlation and Support Vector Machines.” In <em>Feature Extraction</em>, 463–70. Springer.</p>
+</div>
+<div id="ref-rosenblatt1958perceptron">
+<p>Rosenblatt, Frank. 1958. “The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain.” <em>Psychological Review</em> 65 (6): 386.</p>
+</div>
+<div id="ref-scholkopf1997kernel">
+<p>Schölkopf, Bernhard, Alexander Smola, and Klaus-Robert Müller. 1997. “Kernel Principal Component Analysis.” In <em>International Conference on Artificial Neural Networks</em>, 583–88. Springer.</p>
+</div>
+<div id="ref-shiffman2012nature">
+<p>Shiffman, Daniel. 2012. “The Nature of Code: Chapter 10.” <em>Neural Networks</em>.</p>
+</div>
+<div id="ref-tang2014feature">
+<p>Tang, Jiliang, Salem Alelyani, and Huan Liu. 2014. “Feature Selection for Classification: A Review.” <em>Data Classification: Algorithms and Applications</em>, 37.</p>
+</div>
+</div>
+</section>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Matrices are noted in bold capital letters and vectors with capital letters<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>To avoid confusion, the use of "parameter" and "hyper-parameter" has been dedicated to mention the setting of methods whereas the term "feature" is exclusively associated with data either when it is question of raw features or after computation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>In classification, machine learning algorithms are also called classifiers.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>It is used to regulate the scale of the weight modifications.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>when the proportion of samples for a class is high or low in comparison with others<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Note that in LR, a sigmoid was also used and LR was classified as a linear model. In fact, the output of LR can be written in a linear form whereas, because of the multiple perceptrons, it is not possible to write a linear equation to summarize neural networks outputs. Thus, Neural Networks are classified as non-linear models.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

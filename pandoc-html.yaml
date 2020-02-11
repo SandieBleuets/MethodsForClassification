@@ -1,0 +1,21 @@
+input-file: methodsClassification.tex
+from: latex
+
+css: site.css
+to: html
+reference-links: true
+reference-location: section
+number-sections: true
+metadata:
+  title: Introduction to the methods for classification
+  author:
+  - Sandie Cabon
+  bibliography:
+  - chapterMethods.bib
+  link-citations: true
+  reference-section-title: References
+html-math-method:
+  method: katex
+output-file: public/index.html
+
+log-file: log.json
